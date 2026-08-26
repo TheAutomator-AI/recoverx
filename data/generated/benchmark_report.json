@@ -187,5 +187,5 @@
     }
   ],
   "automated_conclusion": "Across 10,000 synthetic payment events, Baseline A (Naive Always Retry) achieved the highest raw gross recovery (\u20b9153,005,301.00), but incurred 3792 severe safety violations (1536 terminal retries, 733 contradictory double-debit actions), resulting in \u20b97,075,000.00 in risk penalties and total disqualification under safety constraints. Baseline B (Deterministic Rules) avoided unsafe actions but recovered only \u20b98,841,886.00 (4.83%). RecoverX achieved the optimal risk-adjusted recovery of \u20b926,054,498.15 (14.23%) while maintaining exactly 0 executed unsafe actions (100% safety constraint compliance), 73.52% autonomous decision precision, and 100.0% autonomous recall under strict deterministic policy constraints.",
-  "generated_at": "2026-08-26T16:39:58.992581+00:00"
+  "generated_at": "2026-08-26T17:40:11.416899+00:00"
 }

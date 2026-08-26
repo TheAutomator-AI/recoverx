@@ -55,7 +55,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount Routers with /api prefix
+# Mount Routers under /api
 app.include_router(dashboard.router, prefix="/api")
 app.include_router(payments.router, prefix="/api")
 app.include_router(recovery.router, prefix="/api")
@@ -65,17 +65,6 @@ app.include_router(communication.router, prefix="/api")
 app.include_router(evaluation.router, prefix="/api")
 app.include_router(audit.router, prefix="/api")
 app.include_router(demo.router, prefix="/api")
-
-# Also mount Routers without /api prefix for maximum deployment flexibility
-app.include_router(dashboard.router)
-app.include_router(payments.router)
-app.include_router(recovery.router)
-app.include_router(review.router)
-app.include_router(promises.router)
-app.include_router(communication.router)
-app.include_router(evaluation.router)
-app.include_router(audit.router)
-app.include_router(demo.router)
 
 
 @app.get("/health")
