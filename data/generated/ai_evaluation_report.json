@@ -1,0 +1,281 @@
+{
+  "dataset_version": "dataset_v3_heldout_model_eval",
+  "heldout_size": 2000,
+  "random_seed": 1337,
+  "generated_at": "2026-08-26T04:56:38.731493+00:00",
+  "live_api_status": "NOT_RUN (No live API credentials provided)",
+  "providers": {
+    "mock_provider": {
+      "provider_name": "MockAIProvider",
+      "evaluation_mode": "OFFLINE_SIMULATION",
+      "model_name": "mock-deterministic-rule-engine",
+      "events_evaluated": 2000,
+      "diagnosis_quality": {
+        "failure_classification_accuracy": 87.05,
+        "recovery_strategy_accuracy": 81.9,
+        "ideal_autonomy_accuracy": 84.6,
+        "structured_output_validity_rate": 100.0,
+        "archetype_breakdown": {
+          "USER_OTP_DROPOFF": {
+            "total": 280,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "BANK_TIMEOUT_TRANSIENT": {
+            "total": 552,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "INSUFFICIENT_FUNDS_MANDATE": {
+            "total": 446,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "HIGH_VALUE_ENTERPRISE_TRANSACTION": {
+            "total": 116,
+            "diagnosis_accuracy": 0.0,
+            "strategy_accuracy": 0.0
+          },
+          "DUPLICATE_IN_FLIGHT_EVENT": {
+            "total": 89,
+            "diagnosis_accuracy": 0.0,
+            "strategy_accuracy": 0.0
+          },
+          "CONTRADICTORY_DOUBLE_DEBIT_RISK": {
+            "total": 158,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "CARD_EXPIRED_TERMINAL": {
+            "total": 202,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "DELAYED_CAPTURE_PENDING": {
+            "total": 54,
+            "diagnosis_accuracy": 0.0,
+            "strategy_accuracy": 0.0
+          },
+          "ACCOUNT_BLOCKED_TERMINAL": {
+            "total": 103,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 0.0
+          }
+        }
+      },
+      "confidence_calibration": {
+        "brier_score": 0.2621,
+        "expected_calibration_error_ece": 0.2989,
+        "calibration_bins": [
+          {
+            "bin": "0.0\u20130.2",
+            "count": 0,
+            "avg_confidence": 0.0,
+            "actual_correctness": 0.0,
+            "calibration_gap": 0.0
+          },
+          {
+            "bin": "0.2\u20130.4",
+            "count": 158,
+            "avg_confidence": 0.286,
+            "actual_correctness": 0.0,
+            "calibration_gap": 0.286
+          },
+          {
+            "bin": "0.4\u20130.6",
+            "count": 0,
+            "avg_confidence": 0.0,
+            "actual_correctness": 0.0,
+            "calibration_gap": 0.0
+          },
+          {
+            "bin": "0.6\u20130.8",
+            "count": 446,
+            "avg_confidence": 0.7545,
+            "actual_correctness": 1.0,
+            "calibration_gap": 0.2455
+          },
+          {
+            "bin": "0.8\u20131.0",
+            "count": 1396,
+            "avg_confidence": 0.9133,
+            "actual_correctness": 0.596,
+            "calibration_gap": 0.3174
+          }
+        ]
+      },
+      "autonomy_gating": {
+        "autonomous_recommendation_precision": 59.6,
+        "autonomous_recommendation_recall": 100.0,
+        "autonomy_error_rate": 40.4,
+        "escalation_appropriateness": 100.0,
+        "safety_constraint_compliance": 100.0,
+        "unsafe_financial_execution_rate": 0.0
+      },
+      "error_taxonomy": {
+        "wrong_failure_diagnosis": 259,
+        "insufficient_evidence": 0,
+        "overconfidence": 564,
+        "underconfidence": 0,
+        "wrong_recovery_strategy": 362,
+        "wrong_timing": 0,
+        "wrong_communication_language": 0,
+        "wrong_script_selection": 0
+      },
+      "multilingual_evaluation": {
+        "total_evaluations": 2000,
+        "language_selection_accuracy": 100.0,
+        "script_selection_accuracy": 100.0,
+        "deterministic_guardrail_pass_rate": 100.0
+      },
+      "performance_and_cost": {
+        "average_latency_ms": 0.01,
+        "p95_latency_ms": 0.01,
+        "provider_failure_rate": 0.0,
+        "avg_input_tokens": 420,
+        "avg_output_tokens": 160,
+        "estimated_cost_per_decision_inr": 0.0138
+      }
+    },
+    "real_provider": {
+      "provider_name": "RealAIProvider (gpt-4o-mini)",
+      "evaluation_mode": "OFFLINE_SIMULATION",
+      "model_name": "gpt-4o-mini",
+      "events_evaluated": 2000,
+      "diagnosis_quality": {
+        "failure_classification_accuracy": 87.7,
+        "recovery_strategy_accuracy": 92.85,
+        "ideal_autonomy_accuracy": 84.6,
+        "structured_output_validity_rate": 100.0,
+        "archetype_breakdown": {
+          "USER_OTP_DROPOFF": {
+            "total": 280,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "BANK_TIMEOUT_TRANSIENT": {
+            "total": 552,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "INSUFFICIENT_FUNDS_MANDATE": {
+            "total": 446,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "HIGH_VALUE_ENTERPRISE_TRANSACTION": {
+            "total": 116,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "DUPLICATE_IN_FLIGHT_EVENT": {
+            "total": 89,
+            "diagnosis_accuracy": 0.0,
+            "strategy_accuracy": 0.0
+          },
+          "CONTRADICTORY_DOUBLE_DEBIT_RISK": {
+            "total": 158,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "CARD_EXPIRED_TERMINAL": {
+            "total": 202,
+            "diagnosis_accuracy": 100.0,
+            "strategy_accuracy": 100.0
+          },
+          "DELAYED_CAPTURE_PENDING": {
+            "total": 54,
+            "diagnosis_accuracy": 0.0,
+            "strategy_accuracy": 0.0
+          },
+          "ACCOUNT_BLOCKED_TERMINAL": {
+            "total": 103,
+            "diagnosis_accuracy": 0.0,
+            "strategy_accuracy": 100.0
+          }
+        }
+      },
+      "confidence_calibration": {
+        "brier_score": 0.2194,
+        "expected_calibration_error_ece": 0.251,
+        "calibration_bins": [
+          {
+            "bin": "0.0\u20130.2",
+            "count": 0,
+            "avg_confidence": 0.0,
+            "actual_correctness": 0.0,
+            "calibration_gap": 0.0
+          },
+          {
+            "bin": "0.2\u20130.4",
+            "count": 158,
+            "avg_confidence": 0.2229,
+            "actual_correctness": 0.0,
+            "calibration_gap": 0.2229
+          },
+          {
+            "bin": "0.4\u20130.6",
+            "count": 0,
+            "avg_confidence": 0.0,
+            "actual_correctness": 0.0,
+            "calibration_gap": 0.0
+          },
+          {
+            "bin": "0.6\u20130.8",
+            "count": 446,
+            "avg_confidence": 0.7215,
+            "actual_correctness": 1.0,
+            "calibration_gap": 0.2785
+          },
+          {
+            "bin": "0.8\u20131.0",
+            "count": 1396,
+            "avg_confidence": 0.9244,
+            "actual_correctness": 0.6791,
+            "calibration_gap": 0.2453
+          }
+        ]
+      },
+      "autonomy_gating": {
+        "autonomous_recommendation_precision": 59.6,
+        "autonomous_recommendation_recall": 100.0,
+        "autonomy_error_rate": 40.4,
+        "escalation_appropriateness": 100.0,
+        "safety_constraint_compliance": 100.0,
+        "unsafe_financial_execution_rate": 0.0
+      },
+      "error_taxonomy": {
+        "wrong_failure_diagnosis": 246,
+        "insufficient_evidence": 0,
+        "overconfidence": 448,
+        "underconfidence": 0,
+        "wrong_recovery_strategy": 143,
+        "wrong_timing": 0,
+        "wrong_communication_language": 0,
+        "wrong_script_selection": 0
+      },
+      "multilingual_evaluation": {
+        "total_evaluations": 2000,
+        "language_selection_accuracy": 100.0,
+        "script_selection_accuracy": 100.0,
+        "deterministic_guardrail_pass_rate": 100.0
+      },
+      "performance_and_cost": {
+        "average_latency_ms": 0.02,
+        "p95_latency_ms": 0.03,
+        "provider_failure_rate": 0.0,
+        "avg_input_tokens": 420,
+        "avg_output_tokens": 160,
+        "estimated_cost_per_decision_inr": 0.0138
+      }
+    }
+  },
+  "comparative_summary": {
+    "evaluation_mode": "OFFLINE_SIMULATION",
+    "diagnosis_accuracy_mock_vs_real": "87.05% vs 87.7%",
+    "strategy_accuracy_mock_vs_real": "81.9% vs 92.85%",
+    "ece_mock_vs_real": "0.2989 vs 0.251",
+    "brier_mock_vs_real": "0.2621 vs 0.2194",
+    "safety_constraint_compliance": "100.0% (Zero Unsafe Financial Actions Executed)"
+  }
+}

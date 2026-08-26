@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 230 100% 99%;
+  --foreground: 216 62% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 216 62% 12%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 216 62% 12%;
+  --primary: 263 76% 53%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 263 76% 53%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 218 6% 29%;
+  --accent: 263 76% 53%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 76% 42%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 263 76% 53%;
+  --radius: 0.25rem;
+}
+
+body {
+  background-color: #f8f9ff;
+  color: #0b1c30;
+  font-family: var(--font-ibm-plex-sans), 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Operational Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f8f9ff;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Stitch Operational Utility Classes */
+.data-label {
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  color: #76777d;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.data-value {
+  font-family: var(--font-ibm-plex-mono), 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  line-height: 16px;
+  color: #0b1c30;
+}
+
+.card-panel {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+
+/* Table Row Hover */
+.table-row-hover:hover {
+  background-color: #f8f9ff;
+}
+
+/* Autonomy & Policy Badges */
+.badge-autonomous {
+  background-color: #ecfdf5;
+  color: #009668;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-assisted {
+  background-color: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.badge-escalated {
+  background-color: #fff1f2;
+  color: #ba1a1a;
+  border: 1px solid #fecdd3;
+}
+

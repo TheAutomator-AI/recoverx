@@ -1,0 +1,62 @@
+{
+  "dataset_version": "v1_standard_100",
+  "dataset_size": 15,
+  "random_seed": 42,
+  "recoverx_metrics": {
+    "strategy_name": "RecoverX (Confidence-Gated AI)",
+    "total_events": 15,
+    "total_at_risk": 474193.0,
+    "recovered_amount": 16195.0,
+    "recovery_rate": 3.42,
+    "autonomous_actions_count": 12,
+    "autonomous_precision": 100.0,
+    "autonomous_error_rate": 0.0,
+    "unsafe_actions_blocked": 0,
+    "unsafe_actions_attempted": 0,
+    "escalation_count": 3,
+    "escalation_rate": 20.0,
+    "unnecessary_interventions": 0,
+    "average_recovery_time_minutes": 8.2,
+    "description": "Production-grade AI agent gating execution by calibrated confidence and deterministic policy rules."
+  },
+  "baseline_a_metrics": {
+    "strategy_name": "Baseline A (Always Retry)",
+    "total_events": 15,
+    "total_at_risk": 474193.0,
+    "recovered_amount": 451195.0,
+    "recovery_rate": 95.15,
+    "autonomous_actions_count": 15,
+    "autonomous_precision": 46.67,
+    "autonomous_error_rate": 53.33,
+    "unsafe_actions_blocked": 0,
+    "unsafe_actions_attempted": 8,
+    "escalation_count": 0,
+    "escalation_rate": 0.0,
+    "unnecessary_interventions": 0,
+    "average_recovery_time_minutes": 2.5,
+    "description": "Naive baseline that blindly retries 100% of failures, causing bank penalties, failed retry charges, and double-debit risks."
+  },
+  "baseline_b_metrics": {
+    "strategy_name": "Baseline B (Fixed Rules)",
+    "total_events": 15,
+    "total_at_risk": 474193.0,
+    "recovered_amount": 3399.0,
+    "recovery_rate": 0.72,
+    "autonomous_actions_count": 3,
+    "autonomous_precision": 100.0,
+    "autonomous_error_rate": 0.0,
+    "unsafe_actions_blocked": 5,
+    "unsafe_actions_attempted": 0,
+    "escalation_count": 7,
+    "escalation_rate": 46.67,
+    "unnecessary_interventions": 7,
+    "average_recovery_time_minutes": 18.0,
+    "description": "Static rule-based heuristic with no AI confidence calibration. Misses balance recovery and customer drop-off recoveries."
+  },
+  "comparative_summary": {
+    "recovered_amount_lift_vs_baseline_b": 12796.0,
+    "recovery_rate_lift_vs_baseline_b_pct": 2.7,
+    "unsafe_actions_eliminated_vs_baseline_a": 8,
+    "autonomous_precision_advantage": 53.33
+  }
+}

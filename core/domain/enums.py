@@ -1,0 +1,141 @@
+from enum import Enum
+
+
+class AutonomyLevel(str, Enum):
+    AUTONOMOUS = "AUTONOMOUS"
+    ASSISTED = "ASSISTED"
+    ESCALATED = "ESCALATED"
+
+
+class PolicyDecisionType(str, Enum):
+    APPROVE = "APPROVE"
+    BLOCK = "BLOCK"
+    ESCALATE = "ESCALATE"
+
+
+class PaymentStatus(str, Enum):
+    PENDING = "PENDING"
+    FAILED = "FAILED"
+    IN_RECOVERY = "IN_RECOVERY"
+    RECOVERED = "RECOVERED"
+    TERMINAL_FAILED = "TERMINAL_FAILED"
+    ESCALATED = "ESCALATED"
+    EXPIRED = "EXPIRED"
+
+
+class FailureSource(str, Enum):
+    BANK = "BANK"
+    GATEWAY = "GATEWAY"
+    CUSTOMER = "CUSTOMER"
+    NETWORK = "NETWORK"
+
+
+class FailureStep(str, Enum):
+    AUTHENTICATION = "AUTHENTICATION"
+    AUTHORIZATION = "AUTHORIZATION"
+    NETWORK_HANDSHAKE = "NETWORK_HANDSHAKE"
+    TIMEOUT = "TIMEOUT"
+    INSUFFICIENT_FUNDS = "INSUFFICIENT_FUNDS"
+    CARD_EXPIRED = "CARD_EXPIRED"
+    ACCOUNT_BLOCKED = "ACCOUNT_BLOCKED"
+    OTP_EXPIRED = "OTP_EXPIRED"
+    USER_CANCELLED = "USER_CANCELLED"
+    CONTRADICTORY_STATUS = "CONTRADICTORY_STATUS"
+    UNKNOWN = "UNKNOWN"
+
+
+class PaymentMethod(str, Enum):
+    UPI = "UPI"
+    CARD = "CARD"
+    NETBANKING = "NETBANKING"
+    MANDATE_AUTOPAY = "MANDATE_AUTOPAY"
+    WALLET = "WALLET"
+
+
+class RecoveryAction(str, Enum):
+    RETRY_NOW = "RETRY_NOW"
+    RETRY_SMART_SCHEDULE = "RETRY_SMART_SCHEDULE"
+    SEND_PAYMENT_LINK = "SEND_PAYMENT_LINK"
+    CONTACT_WHATSAPP = "CONTACT_WHATSAPP"
+    CONTACT_SMS = "CONTACT_SMS"
+    ESCALATE_HUMAN = "ESCALATE_HUMAN"
+    TERMINATE_RECOVERY = "TERMINATE_RECOVERY"
+
+
+class CustomerSegment(str, Enum):
+    ENTERPRISE = "ENTERPRISE"
+    SMB = "SMB"
+    VIP = "VIP"
+    DIRECT_TO_CONSUMER = "DIRECT_TO_CONSUMER"
+    HIGH_RISK = "HIGH_RISK"
+
+
+class Language(str, Enum):
+    ENGLISH = "English"
+    HINDI = "Hindi"
+    TAMIL = "Tamil"
+    TELUGU = "Telugu"
+    KANNADA = "Kannada"
+    MALAYALAM = "Malayalam"
+    MARATHI = "Marathi"
+    BENGALI = "Bengali"
+    GUJARATI = "Gujarati"
+
+
+class Script(str, Enum):
+    LATIN = "Latin"
+    DEVANAGARI = "Devanagari"
+    TAMIL = "Tamil"
+    TELUGU = "Telugu"
+    KANNADA = "Kannada"
+    MALAYALAM = "Malayalam"
+    BENGALI = "Bengali"
+    GUJARATI = "Gujarati"
+
+
+class Tone(str, Enum):
+    EMPATHETIC = "EMPATHETIC"
+    URGENT = "URGENT"
+    PROFESSIONAL = "PROFESSIONAL"
+    CASUAL = "CASUAL"
+
+
+class Formality(str, Enum):
+    FORMAL = "FORMAL"
+    POLITE_INFORMAL = "POLITE_INFORMAL"
+    CASUAL = "CASUAL"
+
+
+class AttemptStatus(str, Enum):
+    SCHEDULED = "SCHEDULED"
+    EXECUTING = "EXECUTING"
+    SUCCESS = "SUCCESS"
+    FAILED = "FAILED"
+    TIMED_OUT = "TIMED_OUT"
+    BLOCKED = "BLOCKED"
+
+
+class ReviewerAction(str, Enum):
+    APPROVE = "APPROVE"
+    MODIFY = "MODIFY"
+    REJECT = "REJECT"
+
+
+class PromiseStatus(str, Enum):
+    PAYMENT_FAILED = "PAYMENT_FAILED"
+    CUSTOMER_CONTACTED = "CUSTOMER_CONTACTED"
+    PROMISE_TO_PAY = "PROMISE_TO_PAY"
+    FOLLOW_UP_DUE = "FOLLOW_UP_DUE"
+    FULFILLED = "FULFILLED"
+    OVERDUE = "OVERDUE"
+    BROKEN = "BROKEN"
+
+
+class AuditActor(str, Enum):
+    SYSTEM = "SYSTEM"
+    AI_AGENT = "AI_AGENT"
+    CONFIDENCE_ENGINE = "CONFIDENCE_ENGINE"
+    POLICY_ENGINE = "POLICY_ENGINE"
+    HUMAN_OPERATOR = "HUMAN_OPERATOR"
+    GATEWAY_SIMULATOR = "GATEWAY_SIMULATOR"
+    PROMISE_SERVICE = "PROMISE_SERVICE"

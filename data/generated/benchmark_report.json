@@ -1,0 +1,191 @@
+{
+  "dataset_version": "dataset_v2_benchmark",
+  "dataset_size": 10000,
+  "random_seed": 42,
+  "edge_case_distribution": {
+    "BANK_TIMEOUT_TRANSIENT": 2799,
+    "USER_OTP_DROPOFF": 1465,
+    "CONTRADICTORY_DOUBLE_DEBIT_RISK": 733,
+    "CARD_EXPIRED_TERMINAL": 1031,
+    "DELAYED_CAPTURE_PENDING": 315,
+    "INSUFFICIENT_FUNDS_MANDATE": 2114,
+    "HIGH_VALUE_ENTERPRISE_TRANSACTION": 520,
+    "DUPLICATE_IN_FLIGHT_EVENT": 518,
+    "ACCOUNT_BLOCKED_TERMINAL": 505
+  },
+  "strategies": {
+    "BASELINE_A": {
+      "strategy_id": "BASELINE_A",
+      "strategy_name": "Baseline A (Naive Always Retry)",
+      "description": "Naive policy that blindly retries 100% of payment failures without checking terminal status or contradictions.",
+      "total_events": 10000,
+      "business": {
+        "revenue_at_risk": 183034352.0,
+        "gross_revenue_recovered": 153005301.0,
+        "recovery_rate": 83.59,
+        "number_of_recoveries": 6350,
+        "average_recovery_time_minutes": 1.5
+      },
+      "safety": {
+        "unsafe_actions_attempted": 3792,
+        "unsafe_actions_blocked": 0,
+        "terminal_failures_retried": 1536,
+        "duplicate_attempts": 518,
+        "policy_violations": 3792,
+        "maximum_attempt_violations": 0,
+        "contradictory_record_actions": 733,
+        "unauthorized_high_value_actions": 1005
+      },
+      "ai_reliability": {
+        "autonomous_precision": 33.19,
+        "autonomous_recall": 77.84,
+        "autonomous_error_rate": 66.81,
+        "escalation_rate": 0.0,
+        "human_overturn_rate": 0.0,
+        "human_modification_rate": 0.0,
+        "ai_recommendation_acceptance_rate": 0.0
+      },
+      "risk_adjusted": {
+        "risk_penalty_cost": 7075000.0,
+        "risk_adjusted_recovery": 145930301.0,
+        "risk_adjusted_recovery_rate": 79.73,
+        "penalty_breakdown": {
+          "terminal_retry_penalty": 768000.0,
+          "double_debit_dispute_penalty": 3665000.0,
+          "duplicate_attempt_penalty": 129500.0,
+          "unauthorized_high_value_penalty": 2512500.0
+        }
+      },
+      "constrained": {
+        "satisfies_strict_safety_constraints": false,
+        "constrained_recovery_amount": 0.0,
+        "disqualification_reasons": [
+          "Attempted 1536 terminal failure retries",
+          "Attempted 733 contradictory double-debit actions",
+          "Attempted 518 duplicate executions",
+          "Committed 3792 total policy safety violations"
+        ]
+      }
+    },
+    "BASELINE_B": {
+      "strategy_id": "BASELINE_B",
+      "strategy_name": "Baseline B (Deterministic Rules Only)",
+      "description": "Static rule-based heuristic that only retries timeouts with fixed retry limits. Zero AI reasoning.",
+      "total_events": 10000,
+      "business": {
+        "revenue_at_risk": 183034352.0,
+        "gross_revenue_recovered": 8841886.0,
+        "recovery_rate": 4.83,
+        "number_of_recoveries": 2799,
+        "average_recovery_time_minutes": 18.0
+      },
+      "safety": {
+        "unsafe_actions_attempted": 0,
+        "unsafe_actions_blocked": 2054,
+        "terminal_failures_retried": 0,
+        "duplicate_attempts": 0,
+        "policy_violations": 0,
+        "maximum_attempt_violations": 0,
+        "contradictory_record_actions": 0,
+        "unauthorized_high_value_actions": 0
+      },
+      "ai_reliability": {
+        "autonomous_precision": 100.0,
+        "autonomous_recall": 65.64,
+        "autonomous_error_rate": 0.0,
+        "escalation_rate": 51.47,
+        "human_overturn_rate": 0.0,
+        "human_modification_rate": 0.0,
+        "ai_recommendation_acceptance_rate": 0.0
+      },
+      "risk_adjusted": {
+        "risk_penalty_cost": 0.0,
+        "risk_adjusted_recovery": 8841886.0,
+        "risk_adjusted_recovery_rate": 4.83,
+        "penalty_breakdown": {}
+      },
+      "constrained": {
+        "satisfies_strict_safety_constraints": true,
+        "constrained_recovery_amount": 8841886.0,
+        "disqualification_reasons": []
+      }
+    },
+    "RECOVERX": {
+      "strategy_id": "RECOVERX",
+      "strategy_name": "RecoverX (Confidence-Gated AI + Policy Engine)",
+      "description": "Production-grade AI agent gating execution by calibrated confidence, deterministic policy rules, and human-in-the-loop review.",
+      "total_events": 10000,
+      "business": {
+        "revenue_at_risk": 183034352.0,
+        "gross_revenue_recovered": 26054498.15,
+        "recovery_rate": 14.23,
+        "number_of_recoveries": 6378,
+        "average_recovery_time_minutes": 8.2
+      },
+      "safety": {
+        "unsafe_actions_attempted": 0,
+        "unsafe_actions_blocked": 833,
+        "terminal_failures_retried": 0,
+        "duplicate_attempts": 0,
+        "policy_violations": 0,
+        "maximum_attempt_violations": 0,
+        "contradictory_record_actions": 0,
+        "unauthorized_high_value_actions": 0
+      },
+      "ai_reliability": {
+        "autonomous_precision": 73.52,
+        "autonomous_recall": 100.0,
+        "autonomous_error_rate": 26.48,
+        "escalation_rate": 33.67,
+        "human_overturn_rate": 37.21,
+        "human_modification_rate": 0.0,
+        "ai_recommendation_acceptance_rate": 62.79
+      },
+      "risk_adjusted": {
+        "risk_penalty_cost": 0.0,
+        "risk_adjusted_recovery": 26054498.15,
+        "risk_adjusted_recovery_rate": 14.23,
+        "penalty_breakdown": {}
+      },
+      "constrained": {
+        "satisfies_strict_safety_constraints": true,
+        "constrained_recovery_amount": 26054498.15,
+        "disqualification_reasons": []
+      }
+    }
+  },
+  "pareto_analysis": [
+    {
+      "strategy": "Baseline A (Naive Always Retry)",
+      "gross_recovered_inr": 153005301.0,
+      "recovery_rate_pct": 83.59,
+      "unsafe_actions_attempted": 3792,
+      "risk_penalty_inr": 7075000.0,
+      "risk_adjusted_recovered_inr": 145930301.0,
+      "satisfies_zero_unsafe_constraints": false,
+      "constrained_valid_recovery_inr": 0.0
+    },
+    {
+      "strategy": "Baseline B (Deterministic Rules Only)",
+      "gross_recovered_inr": 8841886.0,
+      "recovery_rate_pct": 4.83,
+      "unsafe_actions_attempted": 0,
+      "risk_penalty_inr": 0.0,
+      "risk_adjusted_recovered_inr": 8841886.0,
+      "satisfies_zero_unsafe_constraints": true,
+      "constrained_valid_recovery_inr": 8841886.0
+    },
+    {
+      "strategy": "RecoverX (Confidence-Gated AI + Policy Engine)",
+      "gross_recovered_inr": 26054498.15,
+      "recovery_rate_pct": 14.23,
+      "unsafe_actions_attempted": 0,
+      "risk_penalty_inr": 0.0,
+      "risk_adjusted_recovered_inr": 26054498.15,
+      "satisfies_zero_unsafe_constraints": true,
+      "constrained_valid_recovery_inr": 26054498.15
+    }
+  ],
+  "automated_conclusion": "Across 10,000 synthetic payment events, Baseline A (Naive Always Retry) achieved the highest raw gross recovery (\u20b9153,005,301.00), but incurred 3792 severe safety violations (1536 terminal retries, 733 contradictory double-debit actions), resulting in \u20b97,075,000.00 in risk penalties and total disqualification under safety constraints. Baseline B (Deterministic Rules) avoided unsafe actions but recovered only \u20b98,841,886.00 (4.83%). RecoverX achieved the optimal risk-adjusted recovery of \u20b926,054,498.15 (14.23%) while maintaining exactly 0 executed unsafe actions (100% safety constraint compliance), 73.52% autonomous decision precision, and 100.0% autonomous recall under strict deterministic policy constraints.",
+  "generated_at": "2026-08-26T04:56:36.725513+00:00"
+}

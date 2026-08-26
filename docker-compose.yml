@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///app/recoverx.db
+      - APP_NAME=RecoverX — AI Revenue Recovery API
+    volumes:
+      - ./data:/app/data
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api
+    depends_on:
+      - api
