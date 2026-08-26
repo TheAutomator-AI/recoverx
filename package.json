@@ -7,5 +7,10 @@
     "build": "npm --prefix apps/web run build",
     "start": "npm --prefix apps/web run start",
     "lint": "npm --prefix apps/web run lint"
+  },
+  "dependencies": {
+    "next": "^14.2.24",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
