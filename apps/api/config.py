@@ -1,14 +1,16 @@
 import os
 from pathlib import Path
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 
 def get_default_database_url() -> str:
-    if os.getenv("DATABASE_URL"):
-        return os.environ["DATABASE_URL"]
-    if os.getenv("VERCEL"):
+    env_db = os.getenv("DATABASE_URL")
+    if env_db and env_db.strip():
+        return env_db.strip()
+    if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"):
         return "sqlite:////tmp/recoverx.db"
     db_file = PROJECT_ROOT / "recoverx.db"
     return f"sqlite:///{db_file.as_posix()}"
@@ -28,6 +30,23 @@ class Settings(BaseSettings):
         "*",
     ]
     random_seed: int = 42
+
+    @field_validator("random_seed", mode="before")
+    @classmethod
+    def parse_random_seed(cls, v):
+        if v is None or v == "":
+            return 42
+        try:
+            return int(v)
+        except (ValueError, TypeError):
+            return 42
+
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def parse_database_url(cls, v):
+        if not v or not str(v).strip():
+            return get_default_database_url()
+        return str(v).strip()
 
 
 settings = Settings()
