@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { fetchDashboardStats, fetchPayments } from "@/lib/api";
+import { fetchDashboardStats, fetchPayments, API_DISPLAY_URL } from "@/lib/api";
 import { DashboardStats, Payment } from "@/lib/types";
 import { formatINR, formatDate } from "@/lib/utils";
 import {
@@ -82,7 +82,7 @@ export default function DashboardPage() {
               Payment operations unavailable
             </h2>
             <p className="text-xs text-[#76777d] mt-1 font-mono">
-              API: http://127.0.0.1:8000
+              API: {API_DISPLAY_URL}
             </p>
             {error && (
               <p className="text-xs text-[#ba1a1a] mt-2 bg-rose-50 border border-rose-100 rounded p-2 font-mono">

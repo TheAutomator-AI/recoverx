@@ -9,7 +9,46 @@ import {
   ReviewQueueItem,
 } from "./types";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+/**
+ * Canonical API base URL resolver.
+ *
+ * PRODUCTION (NODE_ENV === "production"):
+ * Always returns relative same-origin "/api".
+ * Never uses localhost or allows NEXT_PUBLIC_API_URL to override production behavior.
+ *
+ * DEVELOPMENT (NODE_ENV === "development" or non-production):
+ * Uses NEXT_PUBLIC_API_URL if configured, otherwise falls back to http://127.0.0.1:8000/api.
+ */
+export function getApiBaseUrl(): string {
+  if (process.env.NODE_ENV === "production") {
+    return "/api";
+  }
+  const envUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!envUrl || envUrl === "/api" || envUrl === "/api/") {
+    return "http://127.0.0.1:8000/api";
+  }
+  const trimmed = envUrl.replace(/\/+$/, "");
+  if (trimmed.endsWith("/api")) {
+    return trimmed;
+  }
+  return `${trimmed}/api`;
+}
+
+/**
+ * User-visible display label for the active API endpoint.
+ *
+ * In production: "same-origin /api"
+ * In development: Configured development URL or "http://127.0.0.1:8000"
+ */
+export function getApiDisplayUrl(): string {
+  if (process.env.NODE_ENV === "production") {
+    return "same-origin /api";
+  }
+  return process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+}
+
+export const API_BASE_URL = getApiBaseUrl();
+export const API_DISPLAY_URL = getApiDisplayUrl();
 
 export async function fetchDashboardStats(): Promise<DashboardStats> {
   const res = await fetch(`${API_BASE_URL}/stats/dashboard`, { cache: "no-store" });
@@ -106,5 +145,11 @@ export async function seedDemoDataset() {
 export async function fetchDemoCase(caseName: string) {
   const res = await fetch(`${API_BASE_URL}/demo/cases/${caseName}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to fetch ${caseName}`);
+  return res.json();
+}
+
+export async function fetchRecoveryAttempts(limit = 50) {
+  const res = await fetch(`${API_BASE_URL}/recovery/attempts?limit=${limit}`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch recovery attempts");
   return res.json();
 }

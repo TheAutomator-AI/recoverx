@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { fetchRecoveryAttempts } from "@/lib/api";
 import { formatINR, formatDate } from "@/lib/utils";
 import {
   RotateCcw,
@@ -37,8 +38,7 @@ export default function RecoveryPage() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/recovery/attempts?limit=50", { cache: "no-store" })
-      .then((res) => res.json())
+    fetchRecoveryAttempts(50)
       .then((data) => setAttempts(data))
       .catch((err) => console.error("Error loading attempts:", err))
       .finally(() => setLoading(false));

@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from apps.api.config import settings
-from apps.api.database import init_db
+from apps.api.database import SessionLocal, init_db
 from apps.api.routers import (
     audit,
     communication,
@@ -14,12 +14,22 @@ from apps.api.routers import (
     recovery,
     review,
 )
+from core.domain.models import Payment
+from apps.api.routers.demo import seed_demo_dataset
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Initialize DB schemas on startup
     init_db()
+    # Auto-seed if database is empty so initial loads immediately succeed
+    try:
+        db = SessionLocal()
+        if db.query(Payment).first() is None:
+            seed_demo_dataset(db)
+        db.close()
+    except Exception as e:
+        print(f"Auto-seed check: {e}")
     yield
 
 
@@ -45,7 +55,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount Routers
+# Mount Routers with /api prefix
 app.include_router(dashboard.router, prefix="/api")
 app.include_router(payments.router, prefix="/api")
 app.include_router(recovery.router, prefix="/api")
@@ -56,8 +66,20 @@ app.include_router(evaluation.router, prefix="/api")
 app.include_router(audit.router, prefix="/api")
 app.include_router(demo.router, prefix="/api")
 
+# Also mount Routers without /api prefix for maximum deployment flexibility
+app.include_router(dashboard.router)
+app.include_router(payments.router)
+app.include_router(recovery.router)
+app.include_router(review.router)
+app.include_router(promises.router)
+app.include_router(communication.router)
+app.include_router(evaluation.router)
+app.include_router(audit.router)
+app.include_router(demo.router)
+
 
 @app.get("/health")
+@app.get("/api/health")
 def health_check():
     return {
         "status": "healthy",
