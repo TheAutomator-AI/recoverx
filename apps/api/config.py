@@ -31,6 +31,20 @@ class Settings(BaseSettings):
     ]
     random_seed: int = 42
 
+    @field_validator("app_name", mode="before")
+    @classmethod
+    def parse_app_name(cls, v):
+        if not v or not str(v).strip():
+            return "RecoverX — AI Revenue Recovery API"
+        return str(v).strip()
+
+    @field_validator("app_version", mode="before")
+    @classmethod
+    def parse_app_version(cls, v):
+        if not v or not str(v).strip():
+            return "1.0.0"
+        return str(v).strip()
+
     @field_validator("random_seed", mode="before")
     @classmethod
     def parse_random_seed(cls, v):

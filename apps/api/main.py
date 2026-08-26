@@ -34,8 +34,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title=settings.app_name,
-    version=settings.app_version,
+    title=settings.app_name or "RecoverX — AI Revenue Recovery API",
+    version=settings.app_version or "1.0.0",
     description=(
         "RecoverX — Confidence-Gated AI Revenue Recovery Agent API.\n\n"
         "Core Philosophy: Detect -> Diagnose -> Calibrate Confidence -> Gate Autonomy -> "
