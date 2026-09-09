@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { fetchPayments } from "@/lib/api";
+import { fetchPayments, seedDemoDataset } from "@/lib/api";
 import { Payment } from "@/lib/types";
 import { formatINR, formatDate } from "@/lib/utils";
 import { HumanReviewDrawer } from "@/components/HumanReviewDrawer";
@@ -27,13 +27,31 @@ export default function PaymentsPage() {
   const [failureFilter, setFailureFilter] = useState("ALL");
   const [selectedReviewPayment, setSelectedReviewPayment] = useState<Payment | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [seeding, setSeeding] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const loadPayments = () => {
     setLoading(true);
+    setLoadError(null);
     fetchPayments()
-      .then((data) => setPayments(data))
-      .catch((err) => console.error("Error fetching payments:", err))
-      .finally(() => setLoading(false));
+      .then(async (data) => {
+        if (data.length > 0) {
+          setPayments(data);
+          return;
+        }
+        setSeeding(true);
+        await seedDemoDataset();
+        const seeded = await fetchPayments();
+        setPayments(seeded);
+      })
+      .catch((err) => {
+        console.error("Error fetching payments:", err);
+        setLoadError(err instanceof Error ? err.message : "Failed to load payments");
+      })
+      .finally(() => {
+        setSeeding(false);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -198,14 +216,24 @@ export default function PaymentsPage() {
                   <td colSpan={11} className="py-12 text-center text-[#76777d]">
                     <div className="flex flex-col items-center gap-2">
                       <div className="w-6 h-6 rounded-full border-2 border-[#712ae2] border-t-transparent animate-spin" />
-                      <span className="text-xs font-medium">Loading payments ledger...</span>
+                      <span className="text-xs font-medium">{seeding ? "Preparing deterministic demo ledger..." : "Loading payments ledger..."}</span>
                     </div>
                   </td>
                 </tr>
               ) : filteredPayments.length === 0 ? (
                 <tr>
                   <td colSpan={11} className="py-12 text-center text-[#76777d] text-xs">
-                    No payment records found matching your filters.
+                    <div className="space-y-2">
+                      <p>{loadError || "No payment records found matching your filters."}</p>
+                      {loadError && (
+                        <button
+                          onClick={loadPayments}
+                          className="px-3 py-1 rounded bg-[#0b1c30] text-white text-[11px] font-semibold"
+                        >
+                          Retry
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ) : (
