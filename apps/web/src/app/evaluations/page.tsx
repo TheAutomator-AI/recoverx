@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { runEvaluation } from "@/lib/api";
+import { fetchLatestEvaluation, runEvaluation } from "@/lib/api";
 import { BenchmarkReport } from "@/lib/types";
 import { formatINR } from "@/lib/utils";
 import {
@@ -52,8 +52,18 @@ export default function EvaluationsPage() {
   };
 
   useEffect(() => {
-    // Keep the first paint fast for evaluators. The full 10k benchmark is available on demand.
-    executeHarness(50);
+    // Never make evaluators wait for a fresh benchmark if a persisted report already exists.
+    setLoading(true);
+    fetchLatestEvaluation()
+      .then((latest) => {
+        if (latest) {
+          setReport(latest as unknown as BenchmarkReport);
+          setLoading(false);
+        } else {
+          executeHarness(50);
+        }
+      })
+      .catch(() => executeHarness(50));
   }, []);
 
   if (loading || !report) {
