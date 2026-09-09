@@ -21,6 +21,17 @@ router = APIRouter(prefix="/stats", tags=["Dashboard"])
 @router.get("/dashboard", response_model=DashboardStats)
 def get_dashboard_stats(db: Session = Depends(get_db)):
     payments = db.query(Payment).all()
+    if not payments:
+        # Vercel serverless instances can start with a fresh /tmp SQLite database.
+        # Seed the deterministic sandbox ledger on first read so the public demo is never empty.
+        from apps.api.routers.demo import seed_demo_dataset
+        try:
+            seed_demo_dataset(db)
+            db.expire_all()
+            payments = db.query(Payment).all()
+        except Exception as exc:
+            db.rollback()
+            print(f"Dashboard auto-seed skipped: {exc}")
     decisions = db.query(RecoveryDecision).all()
     policy_decisions = db.query(PolicyDecision).all()
     human_reviews = db.query(HumanReview).all()
