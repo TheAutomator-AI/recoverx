@@ -121,6 +121,13 @@ export async function fetchCommunicationPreview(paymentId: string): Promise<Mult
   return res.json();
 }
 
+export async function fetchLatestEvaluation(): Promise<EvaluationReport | null> {
+  const res = await fetch(API_BASE_URL + "/evaluations/latest", { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch latest evaluation");
+  const data = await res.json();
+  return data?.baseline_comparison ? (data.baseline_comparison as EvaluationReport) : null;
+}
+
 export async function runEvaluation(datasetSize = 50, randomSeed = 42): Promise<EvaluationReport> {
   const res = await fetch(
     `${API_BASE_URL}/evaluations/run?dataset_size=${datasetSize}&random_seed=${randomSeed}`,
