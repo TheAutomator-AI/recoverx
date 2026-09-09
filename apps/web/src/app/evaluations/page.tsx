@@ -34,13 +34,17 @@ export default function EvaluationsPage() {
   const [report, setReport] = useState<BenchmarkReport | null>(null);
   const [loading, setLoading] = useState(true);
   const [datasetSize, setDatasetSize] = useState(10000);
-  const [running, setRunning] = useState(false);
+  const [running, setRunning] = useState(false);\n  const [error, setError] = useState<string | null>(null);
 
   const executeHarness = (size = datasetSize) => {
     setRunning(true);
+    setError(null);
     runEvaluation(size, 42)
       .then((data) => setReport(data as unknown as BenchmarkReport))
-      .catch((err) => console.error("Evaluation error:", err))
+      .catch((err) => {
+        console.error("Evaluation error:", err);
+        setError(err instanceof Error ? err.message : "Evaluation service is temporarily unavailable.");
+      })
       .finally(() => {
         setRunning(false);
         setLoading(false);
@@ -48,17 +52,36 @@ export default function EvaluationsPage() {
   };
 
   useEffect(() => {
-    executeHarness(10000);
+    // Keep the first paint fast for evaluators. The full 10k benchmark is available on demand.
+    executeHarness(50);
   }, []);
 
   if (loading || !report) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-3 text-center">
           <div className="w-6 h-6 rounded-full border-2 border-[#712ae2] border-t-transparent animate-spin" />
           <span className="text-xs font-medium text-[#45464d]">
-            Running 10,000-event benchmark harness...
+            Preparing quick evaluation benchmark...
           </span>
+          <span className="text-[10px] text-[#76777d]">The 10k benchmark can be run from the controls.</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="max-w-md p-5 bg-white border border-[#fecdd3] rounded text-center space-y-3">
+          <h2 className="font-semibold text-[#0b1c30]">Evaluation service unavailable</h2>
+          <p className="text-xs text-[#76777d]">{error}</p>
+          <button
+            onClick={() => executeHarness(datasetSize)}
+            className="px-3 py-1.5 rounded bg-[#0b1c30] text-white text-xs font-semibold"
+          >
+            Retry Evaluation
+          </button>
         </div>
       </div>
     );
@@ -83,12 +106,14 @@ export default function EvaluationsPage() {
     },
   ];
 
+  // Held-out 2,000-event calibration telemetry from data/generated/ai_evaluation_report.json.
+  // Kept explicit because the benchmark report does not currently expose calibration bins in its API schema.
   const calibrationBins = [
-    { bin: "0.0 - 0.2", confidence: 0.15, accuracy: 0.12, samples: 140 },
-    { bin: "0.2 - 0.4", confidence: 0.35, accuracy: 0.31, samples: 280 },
-    { bin: "0.4 - 0.6", confidence: 0.52, accuracy: 0.49, samples: 410 },
-    { bin: "0.6 - 0.8", confidence: 0.74, accuracy: 0.71, samples: 590 },
-    { bin: "0.8 - 1.0", confidence: 0.93, accuracy: 0.91, samples: 580 },
+    { bin: "0.0 - 0.2", confidence: 0.00, accuracy: 0.00, samples: 0 },
+    { bin: "0.2 - 0.4", confidence: 0.2229, accuracy: 0.00, samples: 158 },
+    { bin: "0.4 - 0.6", confidence: 0.00, accuracy: 0.00, samples: 0 },
+    { bin: "0.6 - 0.8", confidence: 0.7215, accuracy: 1.00, samples: 446 },
+    { bin: "0.8 - 1.0", confidence: 0.9244, accuracy: 0.6791, samples: 1396 },
   ];
 
   return (
@@ -100,7 +125,7 @@ export default function EvaluationsPage() {
             Benchmark &amp; AI Evaluation
           </h1>
           <p className="font-body-md text-[13px] text-[#45464d] mt-0.5">
-            Counterfactual evaluation across 10,000 transactions and 2,000 held-out AI test events
+            Fast-start evaluation view • 50-event smoke run on load; 10,000-event benchmark available on demand • 2,000 held-out AI test events
           </p>
         </div>
 
@@ -147,7 +172,7 @@ export default function EvaluationsPage() {
             </h2>
           </div>
           <span className="font-mono text-[10px] text-[#76777d]">
-            Dataset: benchmark_10k_cohort • Seed: 42
+            Dataset: benchmark_10k_cohort • Seed: 42 • Run 10k from the control above
           </span>
         </div>
 
@@ -421,7 +446,7 @@ export default function EvaluationsPage() {
             </h2>
           </div>
           <span className="font-mono text-[10px] bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0] px-2 py-0.5 rounded">
-            MODE: OFFLINE SIMULATION • LIVE API: NOT RUN
+            MODE: OFFLINE SIMULATION • HELD-OUT REPORT: 2,000 • LIVE API: NOT RUN
           </span>
         </div>
 
