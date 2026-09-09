@@ -21,7 +21,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "RecoverX — Payments Revenue Recovery Dashboard",
   description:
-    "Production-grade merchant payments dashboard combining AI diagnostic reasoning with deterministic policy gating for failed payment recovery.",
+    "Sandbox fintech operations dashboard combining AI diagnostic reasoning with deterministic policy gating for failed payment recovery.",
 };
 
 export default function RootLayout({
