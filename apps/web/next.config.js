@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Linting is validated separately; a lint rule must not take down the deploy.
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  // Keep TypeScript checking enabled so real type errors still fail the build.
+  typescript: {
+    ignoreBuildErrors: false,
+  },
   rewrites: async () => {
     // Only in local standalone Next.js development (without Vercel CLI) proxy /api/* to port 8000
     // In production and Vercel environments, allow Vercel to natively route /api/* to api/index.py
