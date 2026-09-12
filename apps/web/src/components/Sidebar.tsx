@@ -151,10 +151,16 @@ export function Sidebar() {
           </div>
         </div>
 
+        <div className="rounded bg-[#131b2e] border border-[#213145] px-2.5 py-2">
+          <div className="text-[10px] uppercase tracking-wider text-[#7c839b]">Built by</div>
+          <div className="text-[12px] font-semibold text-white leading-tight mt-0.5">Raja</div>
+          <div className="text-[10px] text-[#7c839b] mt-0.5">Creator · RecoverX</div>
+        </div>
+
         <div className="flex items-center justify-between px-1 text-[10px] text-[#7c839b]">
           <span className="font-mono">v1.1.0-buildathon</span>
           <span>•</span>
-          <span>RecoverX · Judge Ready</span>
+          <span>Judge Ready</span>
         </div>
       </div>
     </aside>
