@@ -19,22 +19,7 @@ jobs:
       - name: Install web dependencies
         run: npm ci --prefix apps/web
       - name: Build web
-        id: web_build
-        continue-on-error: true
-        shell: bash
-        run: |
-          set -o pipefail
-          npm run build --prefix apps/web 2>&1 | tee web-build.log
-      - name: Upload web build log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: web-build-log-${{ github.sha }}
-          path: web-build.log
-          if-no-files-found: error
-      - name: Fail when web build fails
-        if: steps.web_build.outcome == 'failure'
-        run: exit 1
+        run: npm run build --prefix apps/web
 
   python-tests:
     runs-on: ubuntu-latest
