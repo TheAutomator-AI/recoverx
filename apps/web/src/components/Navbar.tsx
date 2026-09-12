@@ -53,7 +53,6 @@ export function Navbar() {
 
         {/* Right: Search, Reset, Notifications & Merchant Profile */}
         <div className="flex items-center gap-3">
-          {/* Global Search Button */}
           <button
             onClick={() => setSearchOpen(true)}
             className="flex items-center gap-2 px-2.5 py-1 rounded bg-[#f8f9ff] hover:bg-[#eff4ff] border border-[#e2e8f0] text-[12px] text-[#45464d] hover:text-[#0b1c30] transition shadow-2xs"
@@ -66,7 +65,6 @@ export function Navbar() {
             </kbd>
           </button>
 
-          {/* Seed / Reset Demo Button */}
           <button
             onClick={handleSeed}
             disabled={seeding}
@@ -90,7 +88,6 @@ export function Navbar() {
             )}
           </button>
 
-          {/* Notifications */}
           <button
             aria-label="Notifications"
             className="p-1.5 rounded hover:bg-[#f8f9ff] text-[#76777d] hover:text-[#0b1c30] transition relative"
@@ -99,34 +96,33 @@ export function Navbar() {
             <span className="w-1.5 h-1.5 rounded-full bg-[#712ae2] absolute top-1 right-1" />
           </button>
 
-          {/* Help / Docs */}
           <a
-            href="https://github.com"
+            href="https://github.com/TheAutomator-AI/recoverx"
             target="_blank"
             rel="noreferrer"
-            aria-label="Help Documentation"
+            aria-label="RecoverX source code"
             className="p-1.5 rounded hover:bg-[#f8f9ff] text-[#76777d] hover:text-[#0b1c30] transition hidden sm:block"
+            title="RecoverX source code"
           >
             <HelpCircle className="w-4 h-4" />
           </a>
 
           <div className="h-4 w-px bg-[#e2e8f0]" />
 
-          {/* Merchant Profile */}
+          {/* Creator / Merchant Profile */}
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-full bg-[#131b2e] text-white flex items-center justify-center text-[10px] font-bold font-mono">
-              RX
+              R
             </div>
             <div className="hidden sm:block text-left">
-              <div className="text-[11px] font-bold text-[#0b1c30] leading-tight">Merchant Ops</div>
+              <div className="text-[11px] font-bold text-[#0b1c30] leading-tight">Raja</div>
+              <div className="text-[9px] text-[#76777d] leading-tight">Creator · RecoverX</div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Global Search Modal */}
       <GlobalSearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }
-
