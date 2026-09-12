@@ -13,8 +13,7 @@ import {
   FileText,
   Shield,
   Users,
-  Search,
-  Sparkles,
+  Trophy,
 } from "lucide-react";
 import { fetchDashboardStats } from "@/lib/api";
 
@@ -44,6 +43,7 @@ const RECOVERX_NAV: NavItem[] = [
   { href: "/review", label: "Review Queue", icon: UserCheck, hasBadge: true },
   { href: "/promises", label: "Promises", icon: CalendarClock },
   { href: "/evaluations", label: "Evaluations", icon: BarChart3 },
+  { href: "/judge", label: "Judge Center", icon: Trophy },
   { href: "/audit", label: "Audit", icon: FileText },
 ];
 
@@ -152,12 +152,11 @@ export function Sidebar() {
         </div>
 
         <div className="flex items-center justify-between px-1 text-[10px] text-[#7c839b]">
-          <span className="font-mono">v1.0.0-prod</span>
+          <span className="font-mono">v1.1.0-buildathon</span>
           <span>•</span>
-          <span>RecoverX · Buildathon Edition</span>
+          <span>RecoverX · Judge Ready</span>
         </div>
       </div>
     </aside>
   );
 }
-
