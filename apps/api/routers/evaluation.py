@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-import json
+import os
 from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
@@ -19,7 +19,11 @@ def run_evaluation(
     dataset_version: str = Query(default="dataset_v2_benchmark"),
     db: Session = Depends(get_db),
 ):
-    harness = EvaluationHarness()
+    # Vercel serverless functions can write to /tmp, not to the deployed source tree.
+    output_dir = "/tmp/recoverx-generated" if (
+        os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME")
+    ) else None
+    harness = EvaluationHarness(output_dir=output_dir)
     report = harness.evaluate_all(
         dataset_size=dataset_size,
         random_seed=random_seed,
